@@ -5,14 +5,14 @@ local TAG = "SitAnyG_"
 hook.Add("SetupMove", TAG .. "SetupMove", function(ply, mv)
 	local butts = mv:GetButtons()
 
-	if not ply:GetNWBool(TAG) then
+	if not ply:GetNW2Bool(TAG) then
 		return
 	end
 
 	local getUp = bit.band(butts, IN_JUMP) == IN_JUMP or ply:GetMoveType() ~= MOVETYPE_WALK or ply:InVehicle() or not ply:Alive()
 
 	if getUp then
-		ply:SetNWBool(TAG, false)
+		ply:SetNW2Bool(TAG, false)
 	end
 
 	local move = bit.band(butts, IN_DUCK) == IN_DUCK
@@ -34,7 +34,7 @@ end)
 
 hook.Add("CalcMainActivity", TAG .. "CalcMainActivity", function(ply, vel)
 	local seq = ply:LookupSequence("pose_ducking_02")
-	if ply:GetNWBool(TAG) and seq and vel:Length2DSqr() < 1 then
+	if ply:GetNW2Bool(TAG) and seq and vel:Length2DSqr() < 1 then
 		return ACT_MP_SWIM, seq
 	else
 		return
@@ -51,8 +51,8 @@ if SERVER then
 				return
 			end
 
-			if not ply:GetNWBool(TAG) then
-				ply:SetNWBool(TAG, true)
+			if not ply:GetNW2Bool(TAG) then
+				ply:SetNW2Bool(TAG, true)
 				ply.LastSit = CurTime() + 1
 				return true
 			end
@@ -61,7 +61,7 @@ if SERVER then
 
 	concommand.Add("ground_sit", function(ply)
 		if AllowGroundSit:GetBool() and (not ply.LastSit or ply.LastSit < CurTime()) then
-			ply:SetNWBool(TAG, not ply:GetNWBool(TAG))
+			ply:SetNW2Bool(TAG, not ply:GetNW2Bool(TAG))
 			ply.LastSit = CurTime() + 1
 		end
 	end)

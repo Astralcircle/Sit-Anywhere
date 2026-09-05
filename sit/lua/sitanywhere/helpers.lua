@@ -161,7 +161,7 @@ end
 function PMETA:GetSitting()
 	if not IsValid(self:GetVehicle()) then return false end
 	local veh = self:GetVehicle()
-	if veh:GetNWBool("playerdynseat", false) then
+	if veh:GetNW2Bool("playerdynseat", false) then
 		local parent = veh:GetParent()
 		if IsValid(parent) and parent:GetClass() == "sit_holder" then
 			return veh, parent
@@ -183,8 +183,8 @@ function PMETA:ExitSit()
 		SafeRemoveEntity(seat)
 		SafeRemoveEntity(holder)
 
-		if SitAnywhere.GroundSit and self:GetNWBool("SitGroundSitting", false) then
-			self:SetNWBool("SitGroundSitting", false)
+		if SitAnywhere.GroundSit and self:GetNW2Bool("SitGroundSitting", false) then
+			self:SetNW2Bool("SitGroundSitting", false)
 		end
 	end
 end
@@ -192,5 +192,5 @@ end
 function EMETA:IsSitAnywhereSeat()
 	if self:GetClass() ~= "prop_vehicle_prisoner_pod" then return false end
 	if SERVER and self.playerdynseat then return true end
-	return self:GetNWBool("playerdynseat", false)
+	return self:GetNW2Bool("playerdynseat", false)
 end
