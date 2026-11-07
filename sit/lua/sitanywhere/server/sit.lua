@@ -74,7 +74,7 @@ local function Sit(ply, pos, ang, parent, parentbone, func, exit)
 	vehicle:SetPos(pos)
 
 	vehicle.playerdynseat = true
-	vehicle:SetNWBool("playerdynseat", true)
+	vehicle:SetCBBool("playerdynseat", true)
 	vehicle.sittingPly = ply
 	vehicle.oldpos = vehicle:WorldToLocal(ply:GetPos())
 	vehicle.wasCrouching = ply:Crouching()
@@ -341,10 +341,6 @@ function META.Sit(ply, EyeTrace, ang, parent, parentbone, func, exit, wantedAng)
 			if veh:GetParent() == ply then return false end
 
 			ent = Sit(ply, vec, ang2, veh, 0, pose.Func, pose.OnExitFunc)
-
-			--[[ent:SetNWVector("SitPosePos", veh:WorldToLocal(ent:GetPos()))
-			ent:SetNWVector("SitPoseAng", veh:WorldToLocalAngles(ent:GetAngles()))
-			ent:SetNWBool("SitPose", true)]]
 
 			if ent and IsValid(ent) then
 				ent.PlayerOnPlayer = true
